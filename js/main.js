@@ -1,37 +1,48 @@
-// js/main.js
+// js/main.js (Updated with Supabase Session Management)
+
+import { supabase_client as supabase } from './supabase-client.js';
 
 // --- SESSION CHECK (AUTH GUARD) ---
-// Get user data from session storage
-const loggedInUser = JSON.parse(sessionStorage.getItem('lumeo_user'));
-
-// Define which pages are protected
-const protectedPages = ['home.html', 'profile.html', 'settings.html', 'notifications.html', 'create.html', 'data.html', 'insights.html', 'post.html', 'story.html'];
+const protectedPages = ['home.html', 'profile.html', 'settings.html', 'notifications.html', 'create.html', 'data.html', 'insights.html', 'post.html', 'story.html']; // Add all pages that need login
 const currentPage = window.location.pathname.split('/').pop();
 
-if (protectedPages.includes(currentPage) && !loggedInUser) {
-    // If the user is on a protected page AND not logged in, redirect to login
-    window.location.href = 'login.html';
-}
+// This function runs immediately to check the user's session
+(async function checkSession() {
+    const { data: { session }, error } = await supabase.auth.getSession();
 
-// --- HEADER PERSONALIZATION & LOGOUT ---
-if (loggedInUser) {
-    // Find the navigation avatar and profile link if they exist
-    const navAvatar = document.getElementById('nav-user-avatar');
-    const profileLink = document.getElementById('dropdown-profile-link');
-    const logoutBtn = document.getElementById('logout-btn');
+    if (!session && protectedPages.includes(currentPage)) {
+        // If there is NO session and the user is on a protected page, redirect to login
+        window.location.href = 'login.html';
+        return;
+    }
 
-    if (navAvatar) {
-        navAvatar.src = loggedInUser.avatar_url; // Use the stored avatar
+    if (session && (currentPage === 'login.html' || currentPage === 'signup.html')) {
+        // If there IS a session and the user is on the login/signup page, redirect to home
+        window.location.href = 'home.html';
+        return;
     }
-    if (profileLink) {
-        // Make the profile link in the dropdown point to the logged-in user's profile
-        profileLink.href = `profile.html?id=${loggedInUser.user_id}`;
+    
+    // If a user is logged in, update the header
+    if (session) {
+        const user = session.user;
+        const navAvatar = document.getElementById('nav-user-avatar');
+        const profileLink = document.getElementById('dropdown-profile-link');
+        const logoutBtn = document.getElementById('logout-btn');
+
+        if (navAvatar) {
+            // Get user's custom avatar from your public 'users' table
+            const { data: profileData } = await supabase.from('users').select('avatar_url').eq('id', user.id).single();
+            if(profileData) navAvatar.src = profileData.avatar_url;
+        }
+        if (profileLink) {
+            profileLink.href = `profile.html?id=${user.id}`;
+        }
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', async () => {
+                await supabase.auth.signOut();
+                window.location.href = 'login.html';
+            });
+        }
     }
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
-            // Clear the session data and redirect to login
-            sessionStorage.removeItem('lumeo_user');
-            window.location.href = 'login.html';
-        });
-    }
-}
+})();
+                                       
