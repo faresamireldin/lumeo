@@ -1,5 +1,7 @@
 // js/auth.js (Updated with working Login and Signup)
 
+import { supabase } from './supabase-client.js';
+
 // ==================================
 //  LOGIN LOGIC
 // ==================================
@@ -15,31 +17,30 @@ if (loginForm) {
         const password = document.getElementById('password').value;
 
         try {
-            // 1. Fetch the user data from your API using the email
-            const response = await fetch(`https://apex.oracle.com/pls/apex/lumeo/lumeo/api/v1/users/${email}`);
-            
-            if (!response.ok) {
-                throw new Error("User not found or server error.");
-            }
+            // 1. Use Supabase to sign the user in
+            const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+                email: email,
+                password: password,
+            });
 
-            const data = await response.json();
-            
-            // The API returns an array of items, we want the first one
-            if (data.items.length === 0) {
-                throw new Error("Incorrect email or password.");
-            }
-            
-            const user = data.items[0];
+            if (authError) throw authError;
+            if (!authData.user) throw new Error("Login failed, please try again.");
 
-            // 2. Check if the password matches (simplified for now)
-            // IMPORTANT: See security note below!
-            if (password !== user.password_hash) {
-                throw new Error("Incorrect email or password.");
-            }
+            // 2. Fetch the user's public profile data from your 'users' table
+            const { data: profileData, error: profileError } = await supabase
+                .from('users')
+                .select('*')
+                .eq('id', authData.user.id)
+                .single(); // .single() gets one record instead of an array
 
-            // 3. If login is successful
-            sessionStorage.setItem('lumeo_user', JSON.stringify(user));
+            if (profileError) throw profileError;
+
+            // 3. Save the user's data to session storage to keep them logged in
+            sessionStorage.setItem('lumeo_user', JSON.stringify(profileData));
+
+            // 4. Redirect to the home page
             window.location.href = 'home.html';
+
         } catch (error) {
             alert(`Login Failed: ${error.message}`);
         } finally {
@@ -49,14 +50,11 @@ if (loginForm) {
     });
 }
 
-// In js/auth.js, REPLACE the old signup logic with this
 
-// Import the supabase client we just created
-import { supabase } from './supabase-client.js';
-
-// Get the signup form element from the HTML
+// ==================================
+//  SIGNUP LOGIC
+// ==================================
 const signupForm = document.getElementById('signup-form');
-
 if (signupForm) {
     signupForm.addEventListener('submit', async function(event) {
         event.preventDefault();
@@ -67,26 +65,20 @@ if (signupForm) {
         const name = document.getElementById('full-name').value;
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
-        // You can add password confirmation logic here if you wish
 
         // Use Supabase to securely sign up the user
         const { data, error } = await supabase.auth.signUp({
             email: email,
             password: password,
             options: {
-                // You can add extra data here that will be saved with the user
-                data: {
-                    full_name: name,
-                    avatar_url: 'https://i.pravatar.cc/150', // Default avatar
-                }
+                data: { full_name: name, avatar_url: 'https://i.pravatar.cc/150' }
             }
         });
 
         if (error) {
             alert(`Signup failed: ${error.message}`);
         } else {
-            // Supabase handles user creation and sending a confirmation email.
-            // Now, we add their profile info to our public 'users' table.
+            // Now, add their profile info to our public 'users' table
             const { error: profileError } = await supabase
                 .from('users')
                 .insert([
@@ -100,7 +92,7 @@ if (signupForm) {
                 window.location.href = 'login.html';
             }
         }
-
+        
         signupButton.disabled = false;
         signupButton.textContent = 'Sign Up';
     });
