@@ -1,39 +1,40 @@
-// js/auth.js (Simplified for Supabase Sessions)
+// js/auth.js (Simplified)
 
-import { supabase_client as supabase } from './supabase-client.js';
+import { signUpUser, loginUser } from './api.js';
 
 // --- LOGIN LOGIC ---
 const loginForm = document.getElementById('login-form');
 if (loginForm) {
-    loginForm.addEventListener('submit', async function(event) {
+    loginForm.addEventListener('submit', async (event) => {
         event.preventDefault();
-        const loginButton = document.getElementById('login-button');
-        loginButton.disabled = true;
-        loginButton.textContent = 'Logging In...';
-
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
 
         try {
-            // Supabase handles the login and sets the session cookie automatically
-            const { error } = await supabase.auth.signInWithPassword({ email, password });
-            if (error) throw error;
-            
-            // If there's no error, redirect. The auth guard in main.js will handle the rest.
+            const userProfile = await loginUser(email, password);
+            sessionStorage.setItem('lumeo_user', JSON.stringify(userProfile));
             window.location.href = 'home.html';
-
         } catch (error) {
             alert(`Login Failed: ${error.message}`);
-            loginButton.disabled = false;
-            loginButton.textContent = 'Login';
         }
     });
 }
 
-
 // --- SIGNUP LOGIC ---
 const signupForm = document.getElementById('signup-form');
 if (signupForm) {
-    // ... Your existing, working signup code remains here ...
-    // It's already using supabase.auth.signUp(), which is correct.
+    signupForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const name = document.getElementById('full-name').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        try {
+            await signUpUser(name, email, password);
+            alert('Success! Please check your email for a confirmation link to log in.');
+            window.location.href = 'login.html';
+        } catch (error) {
+            alert(`Signup failed: ${error.message}`);
+        }
+    });
 }

@@ -1,13 +1,15 @@
-// js/post.js (Updated with Live Stories and Live Timeline)
+// js/post.js (Final Simplified Version)
+
+import { getLoggedInUser, getTimelinePosts, createStory, getActiveStories } from './api.js';
 
 // --- IMPORTANT ---
-// Make sure these Cloudinary details are correct
+// Cloudinary details are still needed here for the image upload part of story creation
 const CLOUDINARY_CLOUD_NAME = "dc4k7nkrz";
 const CLOUDINARY_UPLOAD_PRESET = "lumeo_platform";
 
-// --- RENDER FUNCTIONS ---
+
+// --- RENDER FUNCTIONS (These create the HTML) ---
 function createStoryElement(story) {
-    // Uses the column names from your database: user_id, name, avatar_url
     return `
         <a href="story.html?id=${story.user_id}" class="flex-shrink-0 text-center">
             <div class="w-16 h-16 rounded-full story-ring">
@@ -33,7 +35,7 @@ function createPostElement(post) {
     `;
 }
 
-// --- MAIN LOGIC TO RUN WHEN THE PAGE LOADS ---
+// --- LOGIC TO RUN WHEN THE PAGE LOADS ---
 document.addEventListener('DOMContentLoaded', () => {
     loadStories();
     loadTimeline();
@@ -41,24 +43,14 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// --- DATA FETCHING FUNCTIONS ---
-
+// --- DATA-FETCHING FUNCTIONS ---
 async function loadStories() {
     const storiesContainer = document.getElementById('stories-container');
-    if (!storiesContainer) return;
-
     try {
-        const response = await fetch('https://apex.oracle.com/pls/apex/lumeo/lumeo/api/v1/stories/');
-        if (!response.ok) throw new Error("Could not fetch stories.");
-
-        const data = await response.json();
-        const stories = data.items;
-
+        const stories = await getActiveStories();
         if (stories && stories.length > 0) {
-            // The "+=" adds the new stories after your "Your Story" button
-            storiesContainer.innerHTML += stories.map(story => createStoryElement(story)).join('');
+            storiesContainer.innerHTML += stories.map(createStoryElement).join('');
         }
-
     } catch (error) {
         console.error("Failed to load stories:", error);
     }
@@ -66,81 +58,58 @@ async function loadStories() {
 
 async function loadTimeline() {
     const feedContainer = document.getElementById('feed-container');
-    const loggedInUser = JSON.parse(sessionStorage.getItem('lumeo_user'));
-
-    // In js/post.js, at the start of 
-    loadTimeline()
-const { data: { user } } = await supabase.auth.getUser();
+    const user = await getLoggedInUser();
+    if (!user) return;
 
     try {
-        const apiUrl = `https://apex.oracle.com/pls/apex/lumeo/lumeo/api/v1/timeline/${loggedInUser.user_id}`;
-        const response = await fetch(apiUrl);
-        if (!response.ok) throw new Error(`Server error: Could not fetch timeline.`);
-        
-        const data = await response.json();
-        const posts = data.items;
-
+        const posts = await getTimelinePosts(user.id);
         if (posts && posts.length > 0) {
             feedContainer.innerHTML = posts.map(post => createPostElement(post)).join('');
         } else {
-            feedContainer.innerHTML = '<p class="text-center text-gray-500 p-8">Your timeline is empty. Find people to follow to see their posts!</p>';
+            feedContainer.innerHTML = '<p class="text-center text-gray-500 p-8">Your timeline is empty. Follow people to see their posts!</p>';
         }
     } catch (error) {
         console.error("Failed to load timeline:", error);
-        feedContainer.innerHTML = `<p class="text-center text-red-500 p-8">${error.message}</p>`;
+        feedContainer.innerHTML = `<p class="text-center text-red-500 p-8">Could not load timeline.</p>`;
     }
 }
 
+// --- STORY CREATION LOGIC ---
 function setupStoryCreation() {
     const yourStoryButton = document.getElementById('your-story-button');
     const storyUploadInput = document.getElementById('story-upload-input');
 
-    if (yourStoryButton && storyUploadInput) {
-        yourStoryButton.addEventListener('click', () => {
-            storyUploadInput.click();
-        });
+    if (!yourStoryButton || !storyUploadInput) return;
 
-        storyUploadInput.addEventListener('change', async (event) => {
-            const file = event.target.files[0];
-            if (!file) return;
+    yourStoryButton.addEventListener('click', () => storyUploadInput.click());
 
-            const loggedInUser = JSON.parse(sessionStorage.getItem('lumeo_user'));
-            if (!loggedInUser) {
-                alert("You must be logged in to add a story.");
-                return;
-            }
+    storyUploadInput.addEventListener('change', async (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
 
-            alert("Uploading your story...");
+        const user = await getLoggedInUser();
+        if (!user) return alert("You must be logged in to add a story.");
 
-            try {
-                const formData = new FormData();
-                formData.append("file", file);
-                formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+        alert("Uploading your story...");
 
-                const cloudinaryResponse = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
-                    method: "POST", body: formData,
-                });
-                
-                const cloudinaryData = await cloudinaryResponse.json();
-                if (cloudinaryData.error) throw new Error(`Cloudinary Error: ${cloudinaryData.error.message}`);
-                
-                const response = await fetch('https://apex.oracle.com/pls/apex/lumeo/lumeo/api/v1/stories/', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        user_id: loggedInUser.user_id,
-                        image_url: cloudinaryData.secure_url
-                    })
-                });
+        try {
+            // 1. Upload to Cloudinary
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+            const cloudinaryResponse = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+                method: "POST", body: formData,
+            });
+            const cloudinaryData = await cloudinaryResponse.json();
+            if (cloudinaryData.error) throw new Error(`Cloudinary Error: ${cloudinaryData.error.message}`);
+            
+            // 2. Call our API function to save the story
+            await createStory(user.id, cloudinaryData.secure_url);
 
-                if (!response.ok) throw new Error("Failed to save story to the database.");
-
-                alert("Your story has been added!");
-                window.location.reload();
-
-            } catch (error) {
-                alert(`Error: ${error.message}`);
-            }
-        });
-    }
+            alert("Your story has been added!");
+            window.location.reload();
+        } catch (error) {
+            alert(`Error: ${error.message}`);
+        }
+    });
 }

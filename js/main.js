@@ -1,9 +1,9 @@
 // js/main.js (Updated with Supabase Session Management)
 
-import { supabase_client as supabase } from './supabase-client.js';
+import { supabase } from './supabase-client.js';
 
 // --- SESSION CHECK (AUTH GUARD) ---
-const protectedPages = ['home.html', 'profile.html', 'settings.html', 'notifications.html', 'create.html', 'data.html', 'insights.html', 'post.html', 'story.html']; // Add all pages that need login
+const protectedPages = ['home.html', 'profile.html', 'settings.html', 'notifications.html', 'create.html', 'data.html', 'insights.html', 'post.html', 'story.html'];
 const currentPage = window.location.pathname.split('/').pop();
 
 // This function runs immediately to check the user's session
@@ -45,4 +45,3 @@ const currentPage = window.location.pathname.split('/').pop();
         }
     }
 })();
-                                       
