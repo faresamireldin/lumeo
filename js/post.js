@@ -68,10 +68,9 @@ async function loadTimeline() {
     const feedContainer = document.getElementById('feed-container');
     const loggedInUser = JSON.parse(sessionStorage.getItem('lumeo_user'));
 
-    if (!loggedInUser) {
-        feedContainer.innerHTML = '<p class="text-center text-red-500 p-8">You must be logged in to see the timeline.</p>';
-        return;
-    }
+    // In js/post.js, at the start of 
+    loadTimeline()
+const { data: { user } } = await supabase.auth.getUser();
 
     try {
         const apiUrl = `https://apex.oracle.com/pls/apex/lumeo/lumeo/api/v1/timeline/${loggedInUser.user_id}`;
