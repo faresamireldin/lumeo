@@ -1,6 +1,6 @@
 // js/auth.js (Updated with working Login and Signup)
 
-import { supabase } from './supabase-client.js';
+import { supabase_client as supabase } from './supabase-client.js';
 
 // ==================================
 //  LOGIN LOGIC
