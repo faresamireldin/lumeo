@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link as="style" href="https://fonts.googleapis.com/css2?display=swap&family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&family=Spline+Sans%3Awght%40400%3B500%3B700" onload="this.rel='stylesheet'" rel="stylesheet"/>
+<title>Lumeo - Notifications</title>
+<link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style type="text/tailwindcss">
+      :root {
+        --primary-color: #d3caec;
+      }
+      body {
+        font-family: 'Spline Sans', 'Noto Sans', sans-serif;
+      }
+    </style>
+</head>
+<body class="bg-[#111015]" style='font-family: "Spline Sans", "Noto Sans", sans-serif;'>
+<div class="relative flex size-full min-h-screen flex-col dark group/design-root overflow-x-hidden">
+<div class="mx-auto flex h-full w-full max-w-sm grow flex-col">
+<header class="flex h-16 items-center border-b border-b-[#2e2c35] px-4">
+<div class="flex w-full items-center justify-between">
+<a class="flex h-10 w-10 items-center justify-center rounded-full text-white" href="home.html">
+<svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+</a>
+<h1 class="text-xl font-bold text-white">Notifications</h1>
+<div class="w-10"></div> </div>
+</header>
+<main class="flex-1 overflow-y-auto">
+<div id="notifications-container" class="flex flex-col">
+</div>
+</main>
+</div>
+</div>
+
+<script src="js/notifications.js" type="module"></script>
+<script src="js/main.js" type="module"></script>
+</body></html>

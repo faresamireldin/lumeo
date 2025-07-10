@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lumeo - Log Out</title>
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link as="style" href="https://fonts.googleapis.com/css2?display=swap&family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&family=Spline+Sans%3Awght%40400%3B500%3B700" onload="this.rel='stylesheet'" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+</head>
+<body class="bg-gray-900">
+<div class="relative flex size-full min-h-screen flex-col bg-[#131316] dark group/design-root overflow-x-hidden" style='font-family: "Spline Sans", "Noto Sans", sans-serif;'>
+<div class="fixed inset-0 z-0 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCw24GYNnguPBcBXSD19bdpFpt_ASoH8RFKhLoQTuOtJjO8gtOgIucfOxp62G_5XIO1kLIwvIZCfEFzCZasNnMMTmnj0k7846u5Z169Z-KmosSNtvOnDPS818mcjgag7TGtx5S_OuSTnTVEqj_vCAIc61QdAqlFofXqkXcsa0OqyvydueXBWpXJ3OVUcINXqQ040Lcp02QuyCi8zFRdurJEpGTAOlTMXPdDx4Heu6luxsXNmVYSIPNK5xrUvaSyMWvtZdM7Cela');"></div>
+<div class="absolute inset-0 z-10 bg-black/50 backdrop-blur-sm"></div>
+<div class="relative z-20 flex h-full grow flex-col">
+
+<header class="flex items-center justify-end whitespace-nowrap px-10 py-3">
+    </header>
+
+<div class="flex flex-1 items-center justify-center">
+<div class="m-4 w-full max-w-md rounded-2xl border border-white/10 bg-[#1C1C1F]/80 p-8 shadow-2xl backdrop-blur-lg">
+<div class="flex flex-col items-center text-center">
+    <div class="mb-4 flex size-12 items-center justify-center rounded-full bg-red-500/10 text-red-500">
+        <svg class="size-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    </div>
+    <h2 class="mb-2 text-xl font-bold text-white">Are you sure you want to log out?</h2>
+    <div class="mt-6 flex w-full gap-4">
+        <button id="cancel-button" class="flex h-12 flex-1 cursor-pointer items-center justify-center rounded-full bg-[#39393d] text-sm font-bold text-white transition-colors hover:bg-[#4a4a4f]">
+            <span class="truncate">Cancel</span>
+        </button>
+        <button id="logout-button" class="flex h-12 flex-1 cursor-pointer items-center justify-center rounded-full bg-red-600 text-sm font-bold text-white transition-colors hover:bg-red-700">
+            <span class="truncate">Log Out</span>
+        </button>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script src="js/logout.js" type="module"></script>
+</body></html>

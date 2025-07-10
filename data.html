@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lumeo - Download Data</title>
+<link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?display=swap&family=Spline+Sans:wght@400;500;700" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style type="text/tailwindcss">
+    :root {
+      --primary-color: #420fdb;
+    }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .animate-spin { animation: spin 1s linear infinite; }
+</style>
+</head>
+<body class="bg-[#111113] text-white" style='font-family: "Spline Sans", sans-serif;'>
+<div class="flex flex-col min-h-screen">
+<header class="sticky top-0 z-10 bg-[#111113]/80 backdrop-blur-md">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16 border-b border-gray-800">
+            <a class="flex items-center gap-2" href="home.html">
+                <svg class="h-8 w-8 text-[var(--primary-color)]" fill="currentColor" viewBox="0 0 48 48"><path d="M44 11.27C44 14.01 39.84 16.4 33.69 17.64C39.84 18.88 44 21.26 44 24c0 2.74-4.16 5.12-10.31 6.36C39.84 31.6 44 33.99 44 36.73C44 40.74 35.05 44 24 44S4 40.74 4 36.73c0-2.74 4.16-5.12 10.31-6.36C8.16 29.12 4 26.74 4 24c0-2.74 4.16-5.12 10.31-6.36C8.16 16.4 4 14.01 4 11.27C4 7.26 12.95 4 24 4s20 3.26 20 6.27z"></path></svg>
+                <h1 class="text-xl font-bold">Lumeo</h1>
+            </a>
+            <a href="settings.html" class="p-2 rounded-full hover:bg-gray-800 transition-colors">
+                <svg fill="currentColor" height="24" viewBox="0 0 256 256" width="24"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path></svg>
+            </a>
+        </div>
+    </div>
+</header>
+<main class="flex-1 flex items-center justify-center py-16">
+    <div class="w-full max-w-lg mx-auto p-8 text-center bg-[#181818] rounded-2xl border border-stone-800 shadow-2xl shadow-stone-950/50">
+        <svg class="mx-auto h-16 w-16 text-stone-500 mb-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>
+        <h1 class="text-4xl font-bold text-white tracking-tighter mb-4">Get a Copy of Your Data</h1>
+        <p class="text-stone-400 text-base leading-relaxed mb-8">
+            Request an export of your Lumeo data. This includes your profile information, posts, and comments. We will prepare a file for you to download.
+        </p>
+        <button id="download-button" class="flex w-full items-center justify-center gap-3 rounded-full h-12 px-6 bg-[var(--primary-color)] hover:bg-violet-800 active:bg-violet-900 text-white text-base font-bold transition-all duration-300 disabled:opacity-50">
+            <div id="button-spinner" class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin hidden"></div>
+            <span id="button-text">Request My Data</span>
+        </button>
+        <p id="status-message" class="text-green-400 text-sm mt-6 hidden"></p>
+    </div>
+</main>
+</div>
+<script src="js/data.js" type="module"></script>
+<script src="js/main.js" type="module"></script>
+</body></html>

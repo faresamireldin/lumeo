@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lumeo Splash Screen</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style type="text/tailwindcss">
+    @keyframes shimmer {
+      0% { background-position: -500px 0; }
+      100% { background-position: 500px 0; }
+    }
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0px); }
+    }
+    .shimmer-text {
+      background: linear-gradient(to right, #ffffff, #d1c4e9, #ffffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 200% 100%;
+      animation: shimmer 5s linear infinite;
+    }
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      animation: float 6s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-[#4c1d95] to-[#1e1b4b] overflow-hidden">
+<div class="relative flex items-center justify-center min-h-screen">
+<div class="absolute inset-0" id="particles-container">
+<script>
+        const container = document.getElementById('particles-container');
+        for (let i = 0; i < 30; i++) {
+          const particle = document.createElement('div');
+          particle.classList.add('particle');
+          const size = Math.random() * 5 + 2;
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          particle.style.top = `${Math.random() * 100}%`;
+          particle.style.left = `${Math.random() * 100}%`;
+          particle.style.animationDelay = `${Math.random() * 5}s`;
+          particle.style.animationDuration = `${Math.random() * 5 + 5}s`;
+          container.appendChild(particle);
+        }
+      </script>
+</div>
+<div class="z-10 text-center">
+<h1 class="text-8xl font-bold text-white shimmer-text" style="font-family: 'Poppins', sans-serif;">
+        Lumeo
+      </h1>
+<div class="mt-8 flex justify-center items-center">
+<div class="w-8 h-8 border-4 border-t-transparent border-white rounded-full animate-spin"></div>
+</div>
+</div>
+</div>
+
+<script>
+  // This function will run after a set amount of time.
+  setTimeout(function() {
+    
+    // LATER, we will add logic here to check if the user is already logged in.
+    // If they are logged in, we will redirect to 'home.html'.
+    // If not, we will redirect to 'login.html'.
+
+    // For now, we will always redirect to the login page.
+    window.location.href = 'login.html';
+
+  }, 3000); // 3000 milliseconds = 3 seconds. You can change this number.
+</script>
+
+</body></html>

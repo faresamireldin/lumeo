@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>About User</title>
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link as="style" href="https://fonts.googleapis.com/css2?display=swap&family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&family=Spline+Sans%3Awght%40400%3B500%3B700" onload="this.rel='stylesheet'" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style type="text/tailwindcss">
+      :root {
+        --primary-color: #d6ceed;
+      }
+      body {
+        font-family: 'Spline Sans', 'Noto Sans', sans-serif;
+      }
+      .material-icons {
+        font-family: 'Material Icons'; font-weight: normal; font-style: normal;
+        font-size: 24px; line-height: 1; letter-spacing: normal;
+        text-transform: none; display: inline-block; white-space: nowrap;
+        word-wrap: normal; direction: ltr; -webkit-font-feature-settings: 'liga';
+        -webkit-font-smoothing: antialiased;
+      }
+    </style>
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#2e2c35] px-4 md:px-10 py-3">
+    <div class="flex items-center gap-8">
+        <a href="home.html" class="flex items-center gap-4 text-white">
+            <div class="w-8 h-8 flex items-center justify-center">
+                <svg class="w-8 h-8 text-[var(--primary-color)]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </div>
+            <h2 class="text-lg font-bold leading-tight tracking-[-0.015em] text-[var(--primary-color)]">Lumeo</h2>
+        </a>
+        <div class="hidden md:flex items-center gap-9"> <a class="text-white/80 hover:text-white text-sm font-medium leading-normal" href="home.html">Home</a>
+        </div>
+    </div>
+    <div class="flex flex-1 justify-end items-center gap-4">
+        <label class="hidden sm:block relative">
+            <span class="sr-only">Search</span>
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3"><svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 256 256"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path></svg></span>
+            <input class="form-input w-full rounded-full bg-gray-800 border-transparent pl-10 pr-4 py-2 text-sm text-white placeholder:text-gray-400 focus:ring-2 focus:ring-[var(--primary-color)] focus:border-transparent" placeholder="Search..." type="search"/>
+        </label>
+        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBQXbdwEfGGohpC025jPDr7DFgEn5sDqG9qT3hf7f33QlMk48lU9XTxcI_74r2DTkwqyNSVAKPUBqiIZDbm0CfrEaCdVoJWdJNhXyhzAk1GOAoNvA5-uTDyJFmRwb5-lDj4B8GUVJNwBV3VVMwSpLGLFYvSFamht7-vp9RYM593VqB_m4V2QPz-M2vzWuvUnCkKFXjOJ54BkpImWDrA6fVNJPavRX66G4G9OX0lJWVijTQ1NerRJuND-0tODrQKLN5SrvE-vupk");'></div>
+    </div>
+</header>
+<main class="flex-1 w-full max-w-4xl mx-auto py-4 sm:p-6 md:py-12 md:px-8">
+    <div class="bg-[#1a1a1d] rounded-2xl shadow-lg border border-[#2e2c35]">
+        <div class="p-8">
+            <div class="flex items-start justify-between mb-8">
+                <div>
+                    <h1 id="header-name" class="text-2xl sm:text-3x1 font-bold text-white"></h1>
+                    <p id="sub-header" class="text-gray-400 mt-1"></p>
+                </div>
+            </div>
+            <div class="space-y-8">
+                <div class="p-6 bg-[#252528] rounded-xl border border-[#2e2c35]">
+                    <h3 class="text-xl font-bold text-white mb-6">Information</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="flex-shrink-0 text-gray-400 mt-1"><span class="material-icons">calendar_today</span></div>
+                            <div>
+                                <p class="font-semibold text-gray-400">Joined</p>
+                                <p id="joined-date" class="text-white"></p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="flex-shrink-0 text-gray-400 mt-1"><span class="material-icons">email</span></div>
+                            <div>
+                                <p class="font-semibold text-gray-400">Email</p>
+                                <p id="email-address" class="text-white"></p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="flex-shrink-0 text-gray-400 mt-1"><span class="material-icons">person</span></div>
+                            <div>
+                                <p class="font-semibold text-gray-400">Bio</p>
+                                <p id="bio-text" class="text-white/90 leading-relaxed"></p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="flex-shrink-0 text-gray-400 mt-1"><span class="material-icons">interests</span></div>
+                            <div>
+                                <p class="font-semibold text-gray-400">Interests</p>
+                                <div id="interests-container" class="flex flex-wrap gap-2 mt-2">
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6 bg-[#252528] rounded-xl border border-[#2e2c35]">
+                    <h3 class="text-xl font-bold text-white mb-6">Links</h3>
+                    <div id="links-container" class="space-y-6">
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</div>
+</div>
+<script src="js/about.js" type="module"></script>
+</body></html>

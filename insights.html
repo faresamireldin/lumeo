@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lumeo - Insights</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style type="text/tailwindcss">
+    :root {
+        --primary-color: #d6ceed;
+        --secondary-text: #9e9cb1;
+        --card-bg: #1c1c21;
+        --border-color: #3a3a4c;
+        --glow-color: rgba(75, 18, 231, 0.25);
+    }
+    body {
+        font-family: 'Spline Sans', sans-serif;
+    }
+    @keyframes fade-in-up {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in {
+        animation: fade-in-up 0.5s ease-out forwards;
+        opacity: 0;
+    }
+    .card-glow {
+        position: relative;
+        overflow: hidden;
+    }
+    .card-glow::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 50% 0%, var(--glow-color), transparent 70%);
+        opacity: 0.5;
+        transition: opacity 0.3s ease-in-out;
+    }
+</style>
+</head>
+<body class="bg-[#131316] text-white">
+<div class="flex flex-col min-h-screen">
+
+<header class="sticky top-0 z-10 bg-[#131316]/80 backdrop-blur-md">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16 border-b border-gray-800">
+            <a class="flex items-center gap-2" href="home.html">
+                <svg class="h-8 w-8 text-purple-400" fill="currentColor" viewBox="0 0 48 48"><path d="M44 11.27C44 14.01 39.84 16.4 33.69 17.64C39.84 18.88 44 21.26 44 24c0 2.74-4.16 5.12-10.31 6.36C39.84 31.6 44 33.99 44 36.73C44 40.74 35.05 44 24 44S4 40.74 4 36.73c0-2.74 4.16-5.12 10.31-6.36C8.16 29.12 4 26.74 4 24c0-2.74 4.16-5.12 10.31-6.36C8.16 16.4 4 14.01 4 11.27C4 7.26 12.95 4 24 4s20 3.26 20 6.27z"></path></svg>
+                <h1 class="text-xl font-bold text-white">Lumeo</h1>
+            </a>
+            <div class="flex items-center gap-4">
+                <p class="text-sm font-semibold text-gray-300 hidden sm:block">My Insights</p>
+                <a id="nav-profile-link" href="profile.html">
+                    <div id="nav-user-avatar" class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-gray-700"></div>
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+<main class="flex-1 px-4 sm:px-8 py-10">
+<div class="max-w-5xl mx-auto">
+    <div class="mb-10 fade-in" style="animation-delay: 100ms;">
+        <h2 class="text-4xl font-bold text-white tracking-tight">Insights</h2>
+        <p class="text-secondary mt-2 text-lg">See how your profile is performing.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div class="md:col-span-1 bg-card rounded-2xl shadow-lg p-6 border border-custom card-glow fade-in" style="animation-delay: 200ms;">
+            <p class="text-secondary font-medium">Profile Views</p>
+            <p id="profile-views-stat" class="text-white text-5xl font-bold mt-2"></p>
+            <p id="profile-views-trend" class="text-green-400 text-sm mt-1"></p>
+        </div>
+        <div class="md:col-span-2 bg-card rounded-2xl shadow-lg p-6 border border-custom card-glow fade-in" style="animation-delay: 300ms;">
+            <h3 class="font-semibold text-white mb-4">Recent Visitors</h3>
+            <div id="recent-visitors-container" class="flex items-center -space-x-3">
+                </div>
+        </div>
+    </div>
+    <div class="bg-card rounded-2xl shadow-lg p-6 sm:p-8 border border-custom card-glow fade-in" style="animation-delay: 400ms;">
+        <div class="flex flex-wrap justify-between items-start gap-4 mb-6">
+            <div>
+                <h3 class="text-xl font-bold text-white">Story Reach</h3>
+                <p class="text-secondary mt-1">Last 6 months</p>
+            </div>
+            <div class="text-right">
+                <p id="story-reach-stat" class="text-white text-4xl font-bold"></p>
+                <div id="story-reach-trend" class="flex items-center justify-end gap-1 text-green-400 font-medium">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 10l7-7m0 0l7 7m-7-7v18" stroke-linecap="round" stroke-width="2"></path></svg>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+        <div id="story-reach-chart" class="grid grid-cols-6 gap-4 h-48 items-end">
+            <div class="flex flex-col items-center gap-2 h-full justify-end group">
+                <div class="bar w-full bg-purple-900/50 group-hover:bg-purple-500/70 rounded-t-lg transition-all ease-out duration-300"></div>
+                <p class="text-secondary text-xs font-bold">Jan</p>
+            </div>
+            <div class="flex flex-col items-center gap-2 h-full justify-end group">
+                <div class="bar w-full bg-purple-900/50 group-hover:bg-purple-500/70 rounded-t-lg transition-all ease-out duration-300"></div>
+                <p class="text-secondary text-xs font-bold">Feb</p>
+            </div>
+            <div class="flex flex-col items-center gap-2 h-full justify-end group">
+                <div class="bar w-full bg-purple-900/50 group-hover:bg-purple-500/70 rounded-t-lg transition-all ease-out duration-300"></div>
+                <p class="text-secondary text-xs font-bold">Mar</p>
+            </div>
+            <div class="flex flex-col items-center gap-2 h-full justify-end group">
+                <div class="bar w-full bg-purple-900/50 group-hover:bg-purple-500/70 rounded-t-lg transition-all ease-out duration-300"></div>
+                <p class="text-secondary text-xs font-bold">Apr</p>
+            </div>
+            <div class="flex flex-col items-center gap-2 h-full justify-end group">
+                <div class="bar w-full bg-purple-900/50 group-hover:bg-purple-500/70 rounded-t-lg transition-all ease-out duration-300"></div>
+                <p class="text-secondary text-xs font-bold">May</p>
+            </div>
+            <div class="flex flex-col items-center gap-2 h-full justify-end group">
+                <div class="bar w-full bg-purple-900/50 group-hover:bg-purple-500/70 rounded-t-lg transition-all ease-out duration-300"></div>
+                <p class="text-secondary text-xs font-bold">Jun</p>
+            </div>
+        </div>
+    </div>
+</div>
+</main>
+</div>
+<script src="js/insights.js" type="module"></script>
+<script src="js/main.js" type="module"></script>
+</body></html>

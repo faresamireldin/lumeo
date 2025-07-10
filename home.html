@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lumeo</title>
+<link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
+<style type="text/tailwindcss">
+        :root {
+            --primary-color: #4b12e7;
+        }
+        body {
+            font-family: 'Spline Sans', sans-serif;
+        }
+        .glowing-button {
+            box-shadow: 0 0 20px 8px rgba(75, 18, 231, 0.45);
+        }
+        .story-ring {
+            padding: 2px;
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            animation: gradient-animation 3s ease infinite;
+            background-size: 200% 200%;
+        }
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* --- NEW, SMALLER OWL STYLES --- */
+        .owl {
+            position: relative;
+            width: 40px; /* Was 50px */
+            height: 22px; /* Was 28px */
+            background-color: #e0e0e0;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .owl:before, .owl:after {
+            content: '';
+            position: absolute;
+            top: -5px; /* Adjusted */
+            width: 11px; /* Was 14px */
+            height: 6px; /* Was 8px */
+            background-color: #e0e0e0;
+            border-radius: 4px 4px 0 0;
+            transition: background-color 0.3s ease;
+        }
+        .owl:before {
+            left: 6px; /* Adjusted */
+        }
+        .owl:after {
+            right: 6px; /* Adjusted */
+        }
+        .owl-eyes {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            padding: 0 8px; /* Adjusted */
+        }
+        .eye {
+            width: 12px; /* Was 16px */
+            height: 12px; /* Was 16px */
+            background-color: #fff;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            transition: background-color 0.3s ease;
+        }
+        .pupil {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 4px; /* Was 6px */
+            height: 4px; /* Was 6px */
+            background-color: #131118;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: background-color 0.3s ease;
+        }
+        .eyelid {
+            position: absolute;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #e0e0e0;
+            transition: top 0.3s ease;
+        }
+        .dark .owl { background-color: #4a4a4a; }
+        .dark .owl:before, .dark .owl:after { background-color: #4a4a4a; }
+        .dark .eye { background-color: #333; }
+        .dark .pupil { background-color: #fff; box-shadow: 0 0 3px #fff; }
+        .dark .eyelid { top: 0; }
+        .profile-dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-[#131118]">
+<div class="relative max-w-md mx-auto min-h-screen bg-white dark:bg-[#131118] flex flex-col">
+<input type="file" id="story-upload-input" class="hidden" accept="image/*">
+<header class="p-4 flex items-center justify-between sticky top-0 bg-white dark:bg-[#131118] z-10 border-b border-gray-200 dark:border-gray-800">
+    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Lumeo</h1>
+    <div class="flex items-center space-x-4">
+        <label class="cursor-pointer" for="darkModeToggle">
+            <input class="hidden" id="darkModeToggle" type="checkbox"/>
+            <div class="owl-container">
+                <div class="owl light"><div class="owl-eyes"><div class="eye"><div class="pupil"></div><div class="eyelid"></div></div><div class="eye"><div class="pupil"></div><div class="eyelid"></div></div></div></div>
+                <div class="owl dark"><div class="owl-eyes"><div class="eye"><div class="pupil"></div><div class="eyelid"></div></div><div class="eye"><div class="pupil"></div><div class="eyelid"></div></div></div></div>
+            </div>
+        </label>
+
+        <div class="profile-dropdown relative">
+            <img id="nav-user-avatar" src="https://i.pravatar.cc/150" alt="Profile" class="w-10 h-10 rounded-full cursor-pointer border-2 border-gray-300 dark:border-gray-700"/>
+            <div class="dropdown-content hidden absolute right-0 mt-2 w-48 bg-white dark:bg-[#1E1C24] rounded-lg shadow-lg py-1 border border-gray-200 dark:border-gray-700">
+                <a id="dropdown-profile-link" href="profile.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">Profile</a>
+                <a href="settings.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">Settings</a>
+                <div class="border-t border-gray-200 dark:border-gray-700 my-1"></div>
+                <a id="logout-btn" href="logout.html" class="block px-4 py-2 text-sm text-red-600 dark:text-red-500 hover:bg-gray-100 dark:hover:bg-gray-800">Logout</a>
+            </div>
+        </div>
+
+    </div>
+</header>
+
+<main class="flex-1 overflow-y-auto pb-28">
+    <div class="border-b border-gray-200 dark:border-gray-800">
+        <div class="px-4 py-3">
+            <div id="stories-container" class="flex space-x-4 overflow-x-auto no-scrollbar">
+                <div id="your-story-button" class="flex-shrink-0 text-center">
+                    <div class="w-16 h-16 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center cursor-pointer mb-1 border-2 border-dashed border-gray-400 dark:border-gray-500">
+                        <svg class="text-gray-500 dark:text-gray-400" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24"><line x1="12" x2="12" y1="5" y2="19"></line><line x1="5" x2="19" y1="12" y2="12"></line></svg>
+                    </div>
+                    <p class="text-xs font-medium text-gray-700 dark:text-gray-300">Your Story</p>
+                </div>
+                </div>
+        </div>
+    </div>
+    <div id="feed-container" class="space-y-4 pt-4">
+        </div>
+</main>
+
+<footer class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white dark:bg-[#1E1C24] border-t border-gray-200 dark:border-gray-700 rounded-t-2xl shadow-[0_-4px_16px_rgba(0,0,0,0.05)]">
+    <div class="flex justify-around items-center h-16 relative">
+        <a class="flex flex-col items-center text-gray-500 dark:text-gray-400 hover:text-[var(--primary-color)] w-1/5" href="search.html">
+            <svg fill="currentColor" height="24" viewBox="0 0 256 256" width="24"><path d="M128,24a8,8,0,0,0-8,8V48.33A88.1,88.1,0,0,0,48.33,120H24a8,8,0,0,0,0,16H48.33A88.1,88.1,0,0,0,120,207.67V224a8,8,0,0,0,16,0V207.67A88.1,88.1,0,0,0,207.67,136H232a8,8,0,0,0,0-16H207.67A88.1,88.1,0,0,0,136,48.33V32A8,8,0,0,0,128,24Zm80,112a72,72,0,1,1-72-72A72.08,72.08,0,0,1,208,136Z"></path></svg>
+            <span class="text-xs font-semibold">Explore</span>
+        </a>
+        <a class="flex flex-col items-center text-gray-500 dark:text-gray-400 hover:text-[var(--primary-color)] w-1/5" href="notifications.html">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            <span class="text-xs font-semibold">Notifications</span>
+        </a>
+        <div class="w-1/5"></div>
+        <a class="flex flex-col items-center text-[var(--primary-color)] w-1/5" href="home.html">
+            <svg fill="currentColor" height="24" viewBox="0 0 256 256" width="24"><path d="M224,115.55V208a16,16,0,0,1-16,16H168a16,16,0,0,1-16-16V168a8,8,0,0,0-8-8H112a8,8,0,0,0-8,8v40a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V115.55a16,16,0,0,1,5.17-11.78l80-75.48.11-.11a16,16,0,0,1,21.53,0,1.14,1.14,0,0,0,.11.11l80,75.48A16,16,0,0,1,224,115.55Z"></path></svg>
+            <span class="text-xs font-semibold">Home</span>
+        </a>
+        <a class="flex flex-col items-center text-gray-500 dark:text-gray-400 hover:text-[var(--primary-color)] w-1/5" href="profile.html">
+            <svg fill="currentColor" height="24" viewBox="0 0 256 256" width="24"><path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"></path></svg>
+            <span class="text-xs font-semibold">Profile</span>
+        </a>
+    </div>
+    <div class="absolute left-1/2 -translate-x-1/2 -top-7">
+        <a href="create.html" class="bg-[var(--primary-color)] text-white rounded-full p-5 glowing-button shadow-lg block">
+            <svg fill="currentColor" height="28" viewBox="0 0 256 256" width="28"><path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"></path></svg>
+        </a>
+    </div>
+</footer>
+
+</div>
+
+<script src="js/theme.js" type="module"></script>
+<script src="js/post.js" type="module"></script>
+<script src="js/main.js" type="module"></script>
+</body></html>

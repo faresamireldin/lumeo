@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>User Profile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
+<style type="text/tailwindcss">
+        :root {
+            --primary-color: #420fdb;
+        }
+        body {
+            font-family: 'Spline Sans', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-[#131118] text-white">
+<div class="min-h-screen">
+
+<div class="relative">
+    <div id="banner-image" class="h-64 bg-gray-800 bg-cover bg-center"></div>
+    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2">
+        <div id="profile-avatar" class="w-36 h-36 rounded-full bg-gray-700 bg-cover bg-center border-4 border-[#131118]"></div>
+    </div>
+</div>
+
+<div class="mt-24 text-center px-4">
+    <div class="flex items-center justify-center gap-2">
+        <h1 id="user-name" class="text-3xl font-bold">Loading...</h1>
+    </div>
+    <p id="user-bio" class="text-gray-400 mt-2 max-w-lg mx-auto"></p>
+
+    <div id="profile-actions-container" class="mt-6 flex justify-center relative">
+        </div>
+</div>
+<div class="mt-8">
+    <div class="border-b border-gray-700">
+        <nav aria-label="Tabs" class="-mb-px flex justify-center space-x-8">
+            <a class="border-[var(--primary-color)] text-[var(--primary-color)] whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" href="#">
+                Posts
+            </a>
+            <a class="border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" href="#">
+                About
+            </a>
+        </nav>
+    </div>
+</div>
+<main class="p-4 sm:p-6 lg:p-8">
+    <div class="max-w-7xl mx-auto">
+        <div id="post-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            </div>
+    </div>
+</main>
+</div>
+
+<script src="js/profile.js" type="module"></script>
+<script src="js/main.js" type="module"></script>
+</body></html>

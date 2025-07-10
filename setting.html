@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lumeo - Settings</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style type="text/tailwindcss">
+      :root {
+        --primary-50: #f2effd; --primary-100: #e2dafb; /* ...etc */
+        --primary-600: #5527e5; --primary-800: #3818b2;
+      }
+      body { font-family: 'Spline Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-950">
+<div class="relative flex size-full min-h-screen flex-col bg-[#111827] dark group/design-root">
+<div class="flex h-full grow flex-col">
+<header class="flex h-16 shrink-0 items-center justify-between border-b border-solid border-gray-800 px-6">
+<a class="flex items-center gap-2 text-white" href="profile.html">
+<svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24"><path d="M15 18l-6-6 6-6"></path></svg>
+<span class="sr-only">Back</span>
+</a>
+<h1 class="text-xl font-semibold text-white">Settings</h1>
+<div class="w-8"></div>
+</header>
+<main class="flex-1 overflow-y-auto">
+<div class="mx-auto max-w-md p-4 sm:p-6">
+<div class="space-y-8">
+<section>
+<h2 class="mb-4 text-lg font-medium text-gray-400">Appearance</h2>
+<div class="rounded-xl bg-gray-900/50 shadow-sm">
+<div class="flex items-center justify-between p-4">
+<div class="flex items-center gap-4">
+<div class="flex size-10 items-center justify-center rounded-full bg-gray-800 text-white"></div>
+<div>
+<p class="text-base font-medium text-white">Dark Mode</p>
+<p class="text-sm text-gray-400">Visuals that are easy on the eyes.</p>
+</div>
+</div>
+<label class="relative inline-flex cursor-pointer items-center">
+<input id="darkModeToggle" class="peer sr-only" type="checkbox" value=""/>
+<div class="peer h-6 w-11 rounded-full bg-gray-700 after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-[var(--primary-600)] peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[var(--primary-800)]"></div>
+</label>
+</div>
+</div>
+</section>
+<div class="border-t border-gray-800"></div>
+<section>
+<h2 class="mb-4 text-lg font-medium text-gray-400">Account</h2>
+<div class="space-y-2 rounded-xl bg-gray-900/50 shadow-sm">
+<div class="flex items-center justify-between p-4">
+<div class="flex items-center gap-4">
+<div class="flex size-10 items-center justify-center rounded-full bg-gray-800 text-white"></div>
+<div>
+<p class="text-base font-medium text-white">Privacy</p>
+<p id="privacy-status-text" class="text-sm text-gray-400">Your profile is currently public.</p>
+</div>
+</div>
+<label class="relative inline-flex cursor-pointer items-center">
+<input id="privacy-toggle" class="peer sr-only" type="checkbox" value=""/>
+<div class="peer h-6 w-11 rounded-full bg-gray-700 after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-[var(--primary-600)] peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[var(--primary-800)]"></div>
+</label>
+</div>
+<div class="h-px bg-gray-800"></div>
+<button id="notifications-button" class="flex w-full items-center justify-between p-4 text-left"></button>
+<div class="h-px bg-gray-800"></div>
+<button id="password-button" class="flex w-full items-center justify-between p-4 text-left"></button>
+</div>
+</section>
+<div class="border-t border-gray-800"></div>
+<section>
+<h2 class="mb-4 text-lg font-medium text-gray-400">Data Management</h2>
+<div class="rounded-xl bg-gray-900/50 shadow-sm">
+<a href="data.html" class="flex w-full items-center justify-between p-4 text-left">
+    <div class="flex items-center gap-4">
+        <div class="flex size-10 items-center justify-center rounded-full bg-gray-800 text-white">
+            <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>
+        </div>
+        <div>
+            <p class="text-base font-medium text-white">Download My Data</p>
+            <p class="text-sm text-gray-400">Get a copy of your information.</p>
+        </div>
+    </div>
+    <svg class="text-gray-400" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="20"><path d="M9 18l6-6-6-6"></path></svg>
+</a>
+</div>
+</section>
+</div>
+</div>
+</main>
+</div>
+</div>
+<script src="js/theme.js" type="module"></script>
+<script src="js/settings.js" type="module"></script>
+<script src="js/main.js" type="module"></script>
+</body></html>
